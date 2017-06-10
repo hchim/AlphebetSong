@@ -1,14 +1,18 @@
-package com.sleepaiden.alphebetsong;
+package com.sleepaiden.alphebetsong.main;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+
+import com.sleepaiden.alphebetsong.R;
+import com.sleepaiden.alphebetsong.settings.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,9 +32,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    // Example of a call to a native method
-    TextView tv = (TextView) findViewById(R.id.sample_text);
-    tv.setText(stringFromJNI());
+        // Example of a call to a native method
+        TextView tv = (TextView) findViewById(R.id.sample_text);
+        tv.setText(stringFromJNI());
     }
 
     @Override
@@ -49,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
             return true;
         }
 

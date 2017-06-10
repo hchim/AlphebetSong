@@ -3,7 +3,7 @@
 
 extern "C"
 JNIEXPORT jstring JNICALL
-Java_com_sleepaiden_alphebetsong_MainActivity_stringFromJNI(
+Java_com_sleepaiden_alphebetsong_main_MainActivity_stringFromJNI(
         JNIEnv* env,
         jobject /* this */) {
     std::string hello = "Hello from C++";
