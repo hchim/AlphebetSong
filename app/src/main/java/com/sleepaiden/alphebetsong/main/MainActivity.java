@@ -3,38 +3,54 @@ package com.sleepaiden.alphebetsong.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import com.sleepaiden.alphebetsong.R;
+import com.sleepaiden.alphebetsong.settings.PreferenceConstants;
 import com.sleepaiden.alphebetsong.settings.SettingsActivity;
+import com.sleepaiden.androidcommonutils.PreferenceUtils;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
+    private PreferenceUtils preferenceUtils;
+
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.fab) FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        ButterKnife.bind(this);
 
-       FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        setSupportActionBar(toolbar);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            //TODO Start a new learning
             }
         });
+    }
 
-        // Example of a call to a native method
-        TextView tv = (TextView) findViewById(R.id.sample_text);
-        tv.setText(stringFromJNI());
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (preferenceUtils == null) {
+            preferenceUtils = new PreferenceUtils(this);
+        }
+        //Set the visibility of floating button
+        String lMode = getLearningMode();
+        if (PreferenceConstants.LEARNING_MODE_MANUAL.equals(lMode)) {
+            fab.setVisibility(View.INVISIBLE);
+        } else {
+            fab.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -61,14 +77,13 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A native method that is implemented by the 'native-lib' native library,
-     * which is packaged with this application.
-     */
-    public native String stringFromJNI();
-
-    // Used to load the 'native-lib' library on application startup.
-    static {
-        System.loadLibrary("native-lib");
+    private String getLearningMode() {
+        return preferenceUtils.getString(
+                PreferenceConstants.PREF_KEY_LEARNING_MODE,
+                PreferenceConstants.LEARNING_MODE_MANUAL);
     }
+
+//    static {
+//        System.loadLibrary("native-lib");
+//    }
 }
