@@ -3,6 +3,7 @@ package com.sleepaiden.alphebetsong.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -12,6 +13,7 @@ import android.view.View;
 import com.sleepaiden.alphebetsong.R;
 import com.sleepaiden.alphebetsong.settings.PreferenceConstants;
 import com.sleepaiden.alphebetsong.settings.SettingsActivity;
+import com.sleepaiden.alphebetsong.views.CustomViewPager;
 import com.sleepaiden.androidcommonutils.PreferenceUtils;
 
 import butterknife.BindView;
@@ -22,6 +24,17 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.fab) FloatingActionButton fab;
+    @BindView(R.id.viewPager) CustomViewPager mViewPager;
+
+    /**
+     * The {@link android.support.v4.view.PagerAdapter} that will provide
+     * fragments for each of the sections. We use a
+     * {@link FragmentPagerAdapter} derivative, which will keep every
+     * loaded fragment in memory. If this becomes too memory intensive, it
+     * may be best to switch to a
+     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
+     */
+    private SectionsPagerAdapter mSectionsPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
             //TODO Start a new learning
             }
         });
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mViewPager.setAdapter(mSectionsPagerAdapter);
     }
 
     @Override
@@ -48,8 +63,10 @@ public class MainActivity extends AppCompatActivity {
         String lMode = getLearningMode();
         if (PreferenceConstants.LEARNING_MODE_MANUAL.equals(lMode)) {
             fab.setVisibility(View.INVISIBLE);
+            mViewPager.setPagingEnabled(true);
         } else {
             fab.setVisibility(View.VISIBLE);
+            mViewPager.setPagingEnabled(false);
         }
     }
 
