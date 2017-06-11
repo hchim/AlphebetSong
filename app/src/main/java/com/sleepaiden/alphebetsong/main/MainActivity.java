@@ -10,12 +10,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.ToxicBakery.viewpager.transforms.ZoomOutSlideTransformer;
 import com.sleepaiden.alphebetsong.R;
+import com.sleepaiden.alphebetsong.models.AlphebetPage;
 import com.sleepaiden.alphebetsong.settings.PreferenceConstants;
 import com.sleepaiden.alphebetsong.settings.SettingsActivity;
 import com.sleepaiden.alphebetsong.views.CustomViewPager;
 import com.sleepaiden.androidcommonutils.PreferenceUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -25,6 +31,14 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.fab) FloatingActionButton fab;
     @BindView(R.id.viewPager) CustomViewPager mViewPager;
+
+    @BindArray(R.array.alphebet_words) String[] words;
+
+    private int[] images = {
+            R.drawable.apple,
+            R.drawable.baby,
+            R.drawable.cookie,
+    };
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -50,7 +64,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        prepareAdapterData();
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setPageTransformer(false, new ZoomOutSlideTransformer());
     }
 
     @Override
@@ -100,6 +116,16 @@ public class MainActivity extends AppCompatActivity {
                 PreferenceConstants.LEARNING_MODE_MANUAL);
     }
 
+    private void prepareAdapterData() {
+        List<AlphebetPage> data = new ArrayList<>(words.length);
+
+        for (int i = 0; i < words.length; i++) {
+            AlphebetPage ap = new AlphebetPage(images[i], words[i], null, null);
+            data.add(ap);
+        }
+
+        mSectionsPagerAdapter.setData(data);
+    }
 //    static {
 //        System.loadLibrary("native-lib");
 //    }

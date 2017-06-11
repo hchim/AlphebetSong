@@ -17,4 +17,10 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="AppTheme.AlphebetWord">
+        <item name="android:textColor">@color/primary_dark</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
 </resources>
