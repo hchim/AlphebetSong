@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
 import com.sleepaiden.alphebetsong.R;
+import com.sleepaiden.androidcommonutils.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,18 +25,21 @@ import butterknife.ButterKnife;
 
 public class VoiceFragmentDialog extends DialogFragment {
     private static final String ARG_VOICE_FILE = "alphebet.voice_file";
+    private static final String ARG_CACHE_VOICE_FILE = "alphebet.cache_voice_file";
 
     @BindView(R.id.playButton) ImageButton playBtn;
     @BindView(R.id.progressBar) ProgressBar progressBar;
 
     private String voiceFile;
+    private String cacheVoiceFile;
     private MediaPlayer mPlayer;
     private boolean isPlaying = false;
 
-    public static VoiceFragmentDialog createInstance(String voiceFile) {
+    public static VoiceFragmentDialog createInstance(String cacheVoiceFile, String voiceFile) {
         VoiceFragmentDialog dialog = new VoiceFragmentDialog();
         Bundle bundle = new Bundle();
         bundle.putString(ARG_VOICE_FILE, voiceFile);
+        bundle.putString(ARG_CACHE_VOICE_FILE, cacheVoiceFile);
         dialog.setArguments(bundle);
         return dialog;
     }
@@ -44,6 +48,7 @@ public class VoiceFragmentDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         voiceFile = getArguments().getString(ARG_VOICE_FILE);
+        cacheVoiceFile = getArguments().getString(ARG_CACHE_VOICE_FILE);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -66,7 +71,8 @@ public class VoiceFragmentDialog extends DialogFragment {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        FileUtils.moveFile(cacheVoiceFile, voiceFile, true);
+                        VoiceFragmentDialog.this.getDialog().cancel();
                     }
                 });
             }
@@ -95,7 +101,7 @@ public class VoiceFragmentDialog extends DialogFragment {
             });
 
             try {
-                mPlayer.setDataSource(voiceFile);
+                mPlayer.setDataSource(cacheVoiceFile);
                 mPlayer.prepare();
                 mPlayer.start();
                 playBtn.setBackgroundResource(R.drawable.ic_pause_48dp);

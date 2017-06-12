@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.sleepaiden.alphebetsong.R;
 import com.sleepaiden.alphebetsong.models.AlphebetPage;
 import com.sleepaiden.alphebetsong.settings.PreferenceConstants;
+import com.sleepaiden.androidcommonutils.FileUtils;
 import com.sleepaiden.androidcommonutils.PreferenceUtils;
 import com.squareup.picasso.Picasso;
 
@@ -153,7 +154,9 @@ public class PlaceholderFragment extends Fragment {
             try {
                 Snackbar.make(voiceBtn, R.string.stop_recording, Snackbar.LENGTH_SHORT).show();
                 mRecorder.stop();
-                VoiceFragmentDialog.createInstance(voiceFilePath).show(getFragmentManager(), null);
+                String customVoiceFile = FileUtils.getDataDir(getContext())
+                        + String.format("/alphebet-%s.3gp", alphebetPage.getWord());
+                VoiceFragmentDialog.createInstance(voiceFilePath, customVoiceFile).show(getFragmentManager(), null);
             } catch (Exception e) {
                 Log.e(TAG, "Failed to stop voice recorder.", e);
             } finally {
