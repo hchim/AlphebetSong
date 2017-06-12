@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 
 import com.sleepaiden.alphebetsong.R;
 
+import java.io.File;
 import java.io.IOException;
 
 import butterknife.BindView;
@@ -53,6 +54,7 @@ public class VoiceFragmentDialog extends DialogFragment {
                 .setPositiveButton(R.string.save_button, null)
                 .setNegativeButton(R.string.cancel_button, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        new File(voiceFile).delete();
                         VoiceFragmentDialog.this.getDialog().cancel();
                     }
                 });

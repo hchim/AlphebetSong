@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -22,8 +23,6 @@ import com.sleepaiden.alphebetsong.models.AlphebetPage;
 import com.sleepaiden.alphebetsong.settings.PreferenceConstants;
 import com.sleepaiden.androidcommonutils.PreferenceUtils;
 import com.squareup.picasso.Picasso;
-
-import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,6 +44,7 @@ public class PlaceholderFragment extends Fragment {
     @BindView(R.id.alphebetToolbar) LinearLayout alphebetToolbar;
 
     private MediaRecorder mRecorder;
+    private boolean isRecording = false;
     private String voiceFilePath;
 
     /**
@@ -70,8 +70,6 @@ public class PlaceholderFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        voiceFilePath = getActivity().getExternalCacheDir().getAbsolutePath()
-                + String.format("/astemp-%d.3gp", System.currentTimeMillis());
         preferenceUtils = new PreferenceUtils(getContext());
         learningMode = preferenceUtils.getString(
                 PreferenceConstants.PREF_KEY_LEARNING_MODE,
@@ -132,31 +130,35 @@ public class PlaceholderFragment extends Fragment {
     }
 
     private void startRecording() {
-        mRecorder = new MediaRecorder();
-        mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        mRecorder.setOutputFile(voiceFilePath);
-        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-
         try {
+            mRecorder = new MediaRecorder();
+            mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+            voiceFilePath = getActivity().getExternalCacheDir().getAbsolutePath()
+                    + String.format("/astemp-%d.3gp", System.currentTimeMillis());
+            mRecorder.setOutputFile(voiceFilePath);
             mRecorder.prepare();
-        } catch (IOException e) {
+            mRecorder.start();
+            isRecording = true;
+            Snackbar.make(voiceBtn, R.string.start_recording, Snackbar.LENGTH_SHORT).show();
+            Log.d(TAG, "Start recording...");
+        } catch (Exception e) {
             Log.e(TAG, "Prepare media recorder failed.", e);
         }
-
-        mRecorder.start();
-        Log.d(TAG, "Start recording...");
     }
 
     private void stopRecording() {
-        if (mRecorder != null) {
+        if (mRecorder != null && isRecording) {
             try {
+                Snackbar.make(voiceBtn, R.string.stop_recording, Snackbar.LENGTH_SHORT).show();
                 mRecorder.stop();
                 VoiceFragmentDialog.createInstance(voiceFilePath).show(getFragmentManager(), null);
-            } catch (RuntimeException e) {
+            } catch (Exception e) {
                 Log.e(TAG, "Failed to stop voice recorder.", e);
             } finally {
                 mRecorder.release();
+                isRecording = false;
                 mRecorder = null;
             }
         }
