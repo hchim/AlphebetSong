@@ -27,11 +27,36 @@
         android:id="@+id/wordTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView"
+        android:layout_above="@+id/alphebetToolbar"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/alphebet_word_margin_top"
+        android:layout_marginBottom="@dimen/alphebet_word_margin_bottom"
         android:fontFamily="casual"
         android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+
+    <LinearLayout
+        android:id="@+id/alphebetToolbar"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/alphebet_toolbar_height"
+        android:layout_marginBottom="@dimen/alphebet_toolbar_margin_bottom">
+
+        <ImageButton
+            android:id="@+id/voiceButton"
+            style="@style/AppTheme.ImageButton"
+            android:layout_width="@dimen/alphebet_toolbar_button_width"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_mic_white_48dp" />
+
+        <!--ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="@dimen/alphebet_toolbar_button_width"
+            android:layout_marginStart="@dimen/alphebet_toolbar_button_margin_left"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/ic_lock_lock" /-->
+    </LinearLayout>
+
 
 </RelativeLayout>

@@ -5,5 +5,16 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
     <dimen name="alphebet_page_image_margin">10dp</dimen>
-    <dimen name="alphebet_word_margin_top">40dp</dimen>
+    <dimen name="alphebet_word_margin_bottom">20dp</dimen>
+    <dimen name="alphebet_toolbar_margin_bottom">10dp</dimen>
+    <dimen name="alphebet_toolbar_height">40dp</dimen>
+    <dimen name="alphebet_toolbar_button_width">40dp</dimen>
+    <dimen name="alphebet_toolbar_button_margin_left">10dp</dimen>
+
+    <dimen name="voice_play_button_width">40dp</dimen>
+    <dimen name="voice_play_button_height">40dp</dimen>
+
+    <dimen name="fragment_horizontal_margin">24dp</dimen>
+    <dimen name="fragment_top_margin">16dp</dimen>
+    <dimen name="fragment_bottom_margin">8dp</dimen>
 </resources>

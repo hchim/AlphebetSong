@@ -3,6 +3,10 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_settings">Settings</string>
 
+    <string name="ok_button">OK</string>
+    <string name="save_button">Save</string>
+    <string name="cancel_button">Cancel</string>
+
     <array name="alphebet_words">
         <item>Apple</item>
         <item>Baby</item>
