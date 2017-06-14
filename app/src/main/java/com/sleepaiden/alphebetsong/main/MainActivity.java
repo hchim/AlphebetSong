@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +21,8 @@ import com.sleepaiden.androidcommonutils.PreferenceUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindArray;
 import butterknife.BindView;
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements VoiceFragmentDial
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private int currentPage = 0;
+    private Timer mTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +74,9 @@ public class MainActivity extends AppCompatActivity implements VoiceFragmentDial
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            //TODO Start a new learning
+                mTimer = new Timer();
+                mTimer.scheduleAtFixedRate(mTimerTask, 0, 5000);
+                fab.setVisibility(View.INVISIBLE);
             }
         });
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -86,7 +90,6 @@ public class MainActivity extends AppCompatActivity implements VoiceFragmentDial
 
             @Override
             public void onPageSelected(int position) {
-                Log.d(TAG, "page " + position + " selected.");
                 if (position != currentPage) {
                     ((FragmentLifecycle) mSectionsPagerAdapter.instantiateItem(mViewPager, currentPage)).onPauseFragment();
                     ((FragmentLifecycle) mSectionsPagerAdapter.instantiateItem(mViewPager, position)).onResumeFragment();
@@ -164,6 +167,24 @@ public class MainActivity extends AppCompatActivity implements VoiceFragmentDial
             }
         }
     }
+
+    private TimerTask mTimerTask = new TimerTask() {
+        @Override
+        public void run() {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    if ((currentPage + 1) >= mSectionsPagerAdapter.getCount()) { // In my case the number of pages are 5
+                        mTimer.cancel();
+                        mViewPager.setCurrentItem(0);
+                        currentPage = 0;
+                        fab.setVisibility(View.VISIBLE);
+                    } else {
+                        mViewPager.setCurrentItem(++currentPage);
+                    }
+                }
+            });
+        }
+    };
 
     //    static {
 //        System.loadLibrary("native-lib");
