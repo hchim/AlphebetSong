@@ -17,6 +17,13 @@
         <item>Cookie</item>
     </array>
 
+    <string name="tips">Tips:</string>
+    <string name="swipe_to_start">Swipe to Start</string>
+    <array name="tips_array">
+        <item>* Tip1</item>
+        <item>* Tipe2</item>
+    </array>
+
     <!-- Strings related to Settings -->
     <string name="pref_cat_general">General</string>
 

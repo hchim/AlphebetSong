@@ -27,18 +27,24 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        // getItem is called to instantiate the fragment for the given page.
-        // Return a PlaceholderFragment (defined as a static inner class below).
-        return PlaceholderFragment.newInstance(data.get(position));
+        if (position == 0) {
+            return FirstPageFragment.newInstance();
+        } else {
+            return PlaceholderFragment.newInstance(data.get(position - 1));
+        }
     }
 
     @Override
     public int getCount() {
-        return data.size();
+        return data.size() + 1;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return data.get(position).getWord();
+        if (position == 0) {
+            return "";
+        } else {
+            return data.get(position - 1).getWord();
+        }
     }
 }
