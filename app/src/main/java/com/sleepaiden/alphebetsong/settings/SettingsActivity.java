@@ -196,7 +196,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // updated to reflect the new value, per the Android Design
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("example_text"));
-            bindPreferenceSummaryToValue(findPreference("learning_mode_list"));
+            bindPreferenceSummaryToValue(findPreference(PreferenceConstants.PREF_KEY_LEARNING_MODE));
+            bindPreferenceSummaryToValue(findPreference(PreferenceConstants.PREF_KEY_SOUND_SOURCE));
         }
 
         @Override

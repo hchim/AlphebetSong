@@ -8,6 +8,9 @@
     <string name="cancel_button">Cancel</string>
     <string name="start_recording">Start recording...</string>
     <string name="stop_recording">Stop recording...</string>
+    <string name="failed_to_save_voice">Failed to save your voice.</string>
+    <string name="successfully_save_voice">Voice saved successfully!</string>
+
     <array name="alphebet_words">
         <item>Apple</item>
         <item>Baby</item>
@@ -21,6 +24,12 @@
     <string-array name="pref_learning_mode_list_titles">
         <item>Manual</item>
         <item>Automatic</item>
+    </string-array>
+
+    <string name="pref_title_sound_source">Sound Source</string>
+    <string-array name="pref_sound_source_list_titles">
+        <item>Default</item>
+        <item>Custom</item>
     </string-array>
 
     <!-- Example General settings -->

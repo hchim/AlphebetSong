@@ -2,6 +2,7 @@ package com.sleepaiden.alphebetsong.main;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -31,22 +32,27 @@ import butterknife.ButterKnife;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class PlaceholderFragment extends Fragment {
+public class PlaceholderFragment extends Fragment implements FragmentLifecycle {
     private static final String TAG = "PlaceholderFragment";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
 
     private AlphebetPage alphebetPage;
     private PreferenceUtils preferenceUtils;
     private String learningMode;
+    private String soundSource;
 
     @BindView(R.id.imageView) ImageView imageView;
     @BindView(R.id.wordTextView) TextView textView;
     @BindView(R.id.voiceButton) ImageButton voiceBtn;
     @BindView(R.id.alphebetToolbar) LinearLayout alphebetToolbar;
+    @BindView(R.id.playButton) ImageButton playBtn;
 
     private MediaRecorder mRecorder;
     private boolean isRecording = false;
-    private String voiceFilePath;
+    private String voiceCachePath;
+    private MediaPlayer mPlayer;
+    private boolean isPlaying = false;
+    private String soundPath;
 
     /**
      * The fragment argument representing the section number for this
@@ -75,6 +81,9 @@ public class PlaceholderFragment extends Fragment {
         learningMode = preferenceUtils.getString(
                 PreferenceConstants.PREF_KEY_LEARNING_MODE,
                 PreferenceConstants.LEARNING_MODE_MANUAL);
+        soundSource = preferenceUtils.getString(
+                PreferenceConstants.PREF_KEY_SOUND_SOURCE,
+                PreferenceConstants.SOUND_SOURCE_DEFAULT);
 
         View rootView = inflater.inflate(R.layout.fragment_page, container, false);
         ButterKnife.bind(this, rootView);
@@ -91,7 +100,24 @@ public class PlaceholderFragment extends Fragment {
             alphebetToolbar.setVisibility(View.INVISIBLE);
         }
 
+        playBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startPlaying();
+            }
+        });
+
         return rootView;
+    }
+
+    @Override
+    public void onResumeFragment() {
+        startPlaying();
+    }
+
+    @Override
+    public void onPauseFragment() {
+        stopPlaying();
     }
 
     private View.OnTouchListener voiceBtnTouchListener = new View.OnTouchListener() {
@@ -136,9 +162,9 @@ public class PlaceholderFragment extends Fragment {
             mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
             mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
             mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-            voiceFilePath = getActivity().getExternalCacheDir().getAbsolutePath()
+            voiceCachePath = getActivity().getExternalCacheDir().getAbsolutePath()
                     + String.format("/astemp-%d.3gp", System.currentTimeMillis());
-            mRecorder.setOutputFile(voiceFilePath);
+            mRecorder.setOutputFile(voiceCachePath);
             mRecorder.prepare();
             mRecorder.start();
             isRecording = true;
@@ -155,8 +181,10 @@ public class PlaceholderFragment extends Fragment {
                 Snackbar.make(voiceBtn, R.string.stop_recording, Snackbar.LENGTH_SHORT).show();
                 mRecorder.stop();
                 String customVoiceFile = FileUtils.getDataDir(getContext())
-                        + String.format("/alphebet-%s.3gp", alphebetPage.getWord());
-                VoiceFragmentDialog.createInstance(voiceFilePath, customVoiceFile).show(getFragmentManager(), null);
+                        + String.format("/alphebet_%s.3gp", alphebetPage.getWord().toLowerCase());
+                VoiceFragmentDialog
+                        .createInstance(voiceCachePath, customVoiceFile, alphebetPage.getWord())
+                        .show(getFragmentManager(), null);
             } catch (Exception e) {
                 Log.e(TAG, "Failed to stop voice recorder.", e);
             } finally {
@@ -166,5 +194,50 @@ public class PlaceholderFragment extends Fragment {
             }
         }
         Log.d(TAG, "Stop recording...");
+    }
+
+    private void startPlaying() {
+        if (isPlaying) {
+            stopPlaying();
+        } else {
+            boolean shouldPlayDefault = shouldPlayDefaultSound();
+            if (shouldPlayDefault) {
+                mPlayer = MediaPlayer.create(getContext(), alphebetPage.getSound());
+            } else {
+                mPlayer = new MediaPlayer();
+            }
+            mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    stopPlaying();
+                }
+            });
+
+            try {
+                if (!shouldPlayDefault) {
+                    mPlayer.setDataSource(alphebetPage.getCustomSoundSource());
+                    mPlayer.prepare();
+                }
+                mPlayer.start();
+                playBtn.setBackgroundResource(R.drawable.ic_pause_48dp);
+                isPlaying = true;
+            } catch (Exception e) {
+                Log.e(TAG, "prepare play voice failed.");
+            }
+        }
+    }
+
+    private void stopPlaying() {
+        if (mPlayer != null) {
+            mPlayer.release();
+            mPlayer = null;
+        }
+        playBtn.setBackgroundResource(R.drawable.ic_play_48dp);
+        isPlaying = false;
+    }
+
+    private boolean shouldPlayDefaultSound() {
+        return soundSource.equals(PreferenceConstants.SOUND_SOURCE_DEFAULT)
+                || alphebetPage.getCustomSoundSource() == null;
     }
 }

@@ -50,12 +50,12 @@
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_mic_white_48dp" />
 
-        <!--ImageButton
-            android:id="@+id/imageButton2"
+        <ImageButton
+            android:id="@+id/playButton"
             android:layout_width="@dimen/alphebet_toolbar_button_width"
             android:layout_marginStart="@dimen/alphebet_toolbar_button_margin_left"
             android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/ic_lock_lock" /-->
+            app:srcCompat="@drawable/ic_play_48dp" />
     </LinearLayout>
 
 

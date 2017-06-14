@@ -12,19 +12,19 @@ import lombok.Data;
 public class AlphebetPage implements Parcelable {
     private int imageId;
     private String word;
-    private String soundSource;
+    private int sound;
     private String customSoundSource;
 
-    public AlphebetPage(int imageId, String word, String soundSource, String customSoundSource) {
+    public AlphebetPage(int imageId, String word, int sound, String customSoundSource) {
         this.imageId = imageId;
         this.word = word;
-        this.soundSource = soundSource;
+        this.sound = sound;
         this.customSoundSource = customSoundSource;
     }
 
     public static final Parcelable.Creator<AlphebetPage> CREATOR = new Parcelable.Creator<AlphebetPage>() {
         public AlphebetPage createFromParcel(Parcel in) {
-            return new AlphebetPage(in.readInt(), in.readString(), in.readString(), in.readString());
+            return new AlphebetPage(in.readInt(), in.readString(), in.readInt(), in.readString());
         }
 
         public AlphebetPage[] newArray(int size) {
@@ -41,7 +41,7 @@ public class AlphebetPage implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(imageId);
         dest.writeString(word);
-        dest.writeString(soundSource);
+        dest.writeInt(sound);
         dest.writeString(customSoundSource);
     }
 }

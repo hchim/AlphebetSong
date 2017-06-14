@@ -6,16 +6,18 @@ import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 
 import com.sleepaiden.alphebetsong.R;
+import com.sleepaiden.alphebetsong.settings.PreferenceConstants;
 import com.sleepaiden.androidcommonutils.FileUtils;
+import com.sleepaiden.androidcommonutils.PreferenceUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,20 +28,23 @@ import butterknife.ButterKnife;
 public class VoiceFragmentDialog extends DialogFragment {
     private static final String ARG_VOICE_FILE = "alphebet.voice_file";
     private static final String ARG_CACHE_VOICE_FILE = "alphebet.cache_voice_file";
+    private static final String ARG_WORD = "alphebet.word";
 
     @BindView(R.id.playButton) ImageButton playBtn;
-    @BindView(R.id.progressBar) ProgressBar progressBar;
 
+    private String word;
     private String voiceFile;
     private String cacheVoiceFile;
     private MediaPlayer mPlayer;
     private boolean isPlaying = false;
+    private PreferenceUtils preferenceUtils;
 
-    public static VoiceFragmentDialog createInstance(String cacheVoiceFile, String voiceFile) {
+    public static VoiceFragmentDialog createInstance(String cacheVoiceFile, String voiceFile, String word) {
         VoiceFragmentDialog dialog = new VoiceFragmentDialog();
         Bundle bundle = new Bundle();
         bundle.putString(ARG_VOICE_FILE, voiceFile);
         bundle.putString(ARG_CACHE_VOICE_FILE, cacheVoiceFile);
+        bundle.putString(ARG_WORD, word);
         dialog.setArguments(bundle);
         return dialog;
     }
@@ -49,6 +54,8 @@ public class VoiceFragmentDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         voiceFile = getArguments().getString(ARG_VOICE_FILE);
         cacheVoiceFile = getArguments().getString(ARG_CACHE_VOICE_FILE);
+        word = getArguments().getString(ARG_WORD);
+        preferenceUtils = new PreferenceUtils(getContext(), PreferenceConstants.PRIVATE_PREF);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -71,7 +78,16 @@ public class VoiceFragmentDialog extends DialogFragment {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        FileUtils.moveFile(cacheVoiceFile, voiceFile, true);
+                        boolean result = FileUtils.moveFile(cacheVoiceFile, voiceFile, true);
+                        if (result) {
+                            preferenceUtils.setValue(word, voiceFile);
+                            if (VoiceFragmentDialog.this.getActivity() instanceof VoiceUpdateInterface) {
+                                ((VoiceUpdateInterface) VoiceFragmentDialog.this.getActivity()).onCustomVoiceSaved(word, voiceFile);
+                            }
+                        }
+                        Snackbar.make(playBtn,
+                                result ? R.string.successfully_save_voice : R.string.failed_to_save_voice,
+                                Snackbar.LENGTH_SHORT).show();
                         VoiceFragmentDialog.this.getDialog().cancel();
                     }
                 });
@@ -119,5 +135,9 @@ public class VoiceFragmentDialog extends DialogFragment {
         }
         playBtn.setBackgroundResource(R.drawable.ic_play_48dp);
         isPlaying = false;
+    }
+
+    public interface VoiceUpdateInterface {
+        void onCustomVoiceSaved(String word, String filePath);
     }
 }

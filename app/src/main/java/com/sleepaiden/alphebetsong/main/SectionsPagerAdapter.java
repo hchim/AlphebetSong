@@ -8,6 +8,7 @@ import com.sleepaiden.alphebetsong.models.AlphebetPage;
 
 import java.util.List;
 
+import lombok.Getter;
 import lombok.Setter;
 
 /**
@@ -17,6 +18,7 @@ import lombok.Setter;
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Setter
+    @Getter
     private List<AlphebetPage> data;
 
     public SectionsPagerAdapter(FragmentManager fm) {

@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,8 +27,10 @@ import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements VoiceFragmentDialog.VoiceUpdateInterface {
+    private static final String TAG = "MainActivity";
     private PreferenceUtils preferenceUtils;
+    private PreferenceUtils priPreferenceUtils;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.fab) FloatingActionButton fab;
@@ -40,6 +44,12 @@ public class MainActivity extends AppCompatActivity {
             R.drawable.cookie,
     };
 
+    private int[] sounds = {
+            R.raw.alphebet_apple,
+            R.raw.alphebet_baby,
+            R.raw.alphebet_cookie,
+    };
+
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -49,13 +59,15 @@ public class MainActivity extends AppCompatActivity {
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
+    private int currentPage = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
+        preferenceUtils = new PreferenceUtils(this);
+        priPreferenceUtils = new PreferenceUtils(this, PreferenceConstants.PRIVATE_PREF);
         setSupportActionBar(toolbar);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,14 +79,30 @@ public class MainActivity extends AppCompatActivity {
         prepareAdapterData();
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setPageTransformer(false, new ZoomOutSlideTransformer());
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Log.d(TAG, "page " + position + " selected.");
+                if (position != currentPage) {
+                    ((FragmentLifecycle) mSectionsPagerAdapter.instantiateItem(mViewPager, currentPage)).onPauseFragment();
+                    ((FragmentLifecycle) mSectionsPagerAdapter.instantiateItem(mViewPager, position)).onResumeFragment();
+                    currentPage = position;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (preferenceUtils == null) {
-            preferenceUtils = new PreferenceUtils(this);
-        }
         //Set the visibility of floating button
         String lMode = getLearningMode();
         if (PreferenceConstants.LEARNING_MODE_MANUAL.equals(lMode)) {
@@ -120,13 +148,24 @@ public class MainActivity extends AppCompatActivity {
         List<AlphebetPage> data = new ArrayList<>(words.length);
 
         for (int i = 0; i < words.length; i++) {
-            AlphebetPage ap = new AlphebetPage(images[i], words[i], null, null);
+            AlphebetPage ap = new AlphebetPage(images[i], words[i], sounds[i], priPreferenceUtils.getString(words[i], null));
             data.add(ap);
         }
 
         mSectionsPagerAdapter.setData(data);
     }
-//    static {
+
+    @Override
+    public void onCustomVoiceSaved(String word, String filePath) {
+        for (AlphebetPage ap : mSectionsPagerAdapter.getData()) {
+            if (word.equals(ap.getWord())) {
+                ap.setCustomSoundSource(filePath);
+                break;
+            }
+        }
+    }
+
+    //    static {
 //        System.loadLibrary("native-lib");
 //    }
 }
