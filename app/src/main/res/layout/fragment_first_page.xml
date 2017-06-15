@@ -27,8 +27,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/imageView"
         android:layout_marginTop="@dimen/first_page_tips_text_margin_top"
-        android:layout_toStartOf="@+id/imageView"
-        android:text="@string/tips" />
+        android:layout_marginStart="@dimen/first_page_tips_text_margin_left"
+        android:text="@string/tips"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
     <ListView
         android:id="@+id/tipsListView"
@@ -38,15 +39,6 @@
         android:divider="@null"
         android:dividerHeight="0dp"
         android:layout_marginTop="@dimen/first_page_list_margin_top"
-        android:layout_alignStart="@+id/textView" />
-
-    <TextView
-        android:id="@+id/swipeToStartTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/first_page_swipe_text_margin_bottom"
-        android:text="@string/swipe_to_start"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+        android:listSelector="@android:color/transparent"
+        android:layout_marginStart="@dimen/first_page_list_margin_left" />
 </RelativeLayout>

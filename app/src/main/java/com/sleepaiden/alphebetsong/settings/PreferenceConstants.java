@@ -6,10 +6,6 @@ package com.sleepaiden.alphebetsong.settings;
 
 public class PreferenceConstants {
 
-    public static final String PREF_KEY_LEARNING_MODE = "learning_mode_list";
-    public static final String LEARNING_MODE_MANUAL = "Manual";
-    public static final String LEARNING_MODE_AUTOMATIC = "Automatic";
-
     public static final String PREF_KEY_SOUND_SOURCE = "sound_source_list";
     public static final String SOUND_SOURCE_DEFAULT = "Default";
     public static final String SOUND_SOURCE_CUSTOM = "Custom";

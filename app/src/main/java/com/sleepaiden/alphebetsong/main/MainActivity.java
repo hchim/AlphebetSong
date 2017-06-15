@@ -2,14 +2,12 @@ package com.sleepaiden.alphebetsong.main;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.ToxicBakery.viewpager.transforms.ZoomOutSlideTransformer;
 import com.sleepaiden.alphebetsong.R;
@@ -22,7 +20,6 @@ import com.sleepaiden.androidcommonutils.PreferenceUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.BindArray;
 import butterknife.BindView;
@@ -34,7 +31,6 @@ public class MainActivity extends AppCompatActivity implements VoiceFragmentDial
     private PreferenceUtils priPreferenceUtils;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.fab) FloatingActionButton fab;
     @BindView(R.id.viewPager) CustomViewPager mViewPager;
 
     @BindArray(R.array.alphebet_words) String[] words;
@@ -71,14 +67,7 @@ public class MainActivity extends AppCompatActivity implements VoiceFragmentDial
         preferenceUtils = new PreferenceUtils(this);
         priPreferenceUtils = new PreferenceUtils(this, PreferenceConstants.PRIVATE_PREF);
         setSupportActionBar(toolbar);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mTimer = new Timer();
-                mTimer.scheduleAtFixedRate(mTimerTask, 0, 5000);
-                fab.setVisibility(View.INVISIBLE);
-            }
-        });
+
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         prepareAdapterData();
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -101,20 +90,6 @@ public class MainActivity extends AppCompatActivity implements VoiceFragmentDial
             public void onPageScrollStateChanged(int state) {
             }
         });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //Set the visibility of floating button
-        String lMode = getLearningMode();
-        if (PreferenceConstants.LEARNING_MODE_MANUAL.equals(lMode)) {
-            fab.setVisibility(View.INVISIBLE);
-            mViewPager.setPagingEnabled(true);
-        } else {
-            fab.setVisibility(View.VISIBLE);
-            mViewPager.setPagingEnabled(false);
-        }
     }
 
     @Override
@@ -141,12 +116,6 @@ public class MainActivity extends AppCompatActivity implements VoiceFragmentDial
         return super.onOptionsItemSelected(item);
     }
 
-    private String getLearningMode() {
-        return preferenceUtils.getString(
-                PreferenceConstants.PREF_KEY_LEARNING_MODE,
-                PreferenceConstants.LEARNING_MODE_MANUAL);
-    }
-
     private void prepareAdapterData() {
         List<AlphebetPage> data = new ArrayList<>(words.length);
 
@@ -167,24 +136,6 @@ public class MainActivity extends AppCompatActivity implements VoiceFragmentDial
             }
         }
     }
-
-    private TimerTask mTimerTask = new TimerTask() {
-        @Override
-        public void run() {
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    if ((currentPage + 1) >= mSectionsPagerAdapter.getCount()) { // In my case the number of pages are 5
-                        mTimer.cancel();
-                        mViewPager.setCurrentItem(0);
-                        currentPage = 0;
-                        fab.setVisibility(View.VISIBLE);
-                    } else {
-                        mViewPager.setCurrentItem(++currentPage);
-                    }
-                }
-            });
-        }
-    };
 
     //    static {
 //        System.loadLibrary("native-lib");

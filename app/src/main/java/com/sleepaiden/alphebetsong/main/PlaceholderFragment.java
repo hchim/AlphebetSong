@@ -78,9 +78,6 @@ public class PlaceholderFragment extends Fragment implements FragmentLifecycle {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         preferenceUtils = new PreferenceUtils(getContext());
-        learningMode = preferenceUtils.getString(
-                PreferenceConstants.PREF_KEY_LEARNING_MODE,
-                PreferenceConstants.LEARNING_MODE_MANUAL);
         soundSource = preferenceUtils.getString(
                 PreferenceConstants.PREF_KEY_SOUND_SOURCE,
                 PreferenceConstants.SOUND_SOURCE_DEFAULT);
@@ -93,12 +90,7 @@ public class PlaceholderFragment extends Fragment implements FragmentLifecycle {
                 .load(alphebetPage.getImageId())
                 .into(imageView);
         textView.setText(alphebetPage.getWord());
-
         voiceBtn.setOnTouchListener(voiceBtnTouchListener);
-
-        if (learningMode.equals(PreferenceConstants.LEARNING_MODE_AUTOMATIC)) {
-            alphebetToolbar.setVisibility(View.INVISIBLE);
-        }
 
         playBtn.setOnClickListener(new View.OnClickListener() {
             @Override

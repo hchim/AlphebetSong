@@ -10,7 +10,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.sleepaiden.alphebetsong.R;
-import com.sleepaiden.alphebetsong.settings.PreferenceConstants;
 import com.sleepaiden.androidcommonutils.PreferenceUtils;
 
 import butterknife.BindArray;
@@ -41,15 +40,6 @@ public class FirstPageFragment extends Fragment implements FragmentLifecycle {
         preferenceUtils = new PreferenceUtils(getContext());
         View rootView = inflater.inflate(R.layout.fragment_first_page, container, false);
         ButterKnife.bind(this, rootView);
-        String learningMode = preferenceUtils.getString(
-                PreferenceConstants.PREF_KEY_LEARNING_MODE,
-                PreferenceConstants.LEARNING_MODE_MANUAL);
-
-        if (learningMode.equals(PreferenceConstants.LEARNING_MODE_AUTOMATIC)) {
-            textView.setVisibility(View.INVISIBLE);
-        } else {
-            textView.setVisibility(View.VISIBLE);
-        }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 getContext(),
