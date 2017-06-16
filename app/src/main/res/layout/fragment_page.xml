@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,6 +8,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:background="@color/primary_light"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context="com.sleepaiden.alphebetsong.main.PlaceholderFragment">
 
 
@@ -15,21 +16,17 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_centerInParent="true"
         android:adjustViewBounds="true"
         android:layout_margin="@dimen/alphebet_page_image_margin"
         android:scaleType="fitXY"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:srcCompat="@drawable/apple" />
 
     <TextView
         android:id="@+id/wordTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/alphebetToolbar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/alphebet_word_margin_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
         android:fontFamily="casual"
         android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
@@ -37,7 +34,6 @@
     <LinearLayout
         android:id="@+id/alphebetToolbar"
         android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="@dimen/alphebet_toolbar_height"
@@ -59,4 +55,4 @@
     </LinearLayout>
 
 
-</RelativeLayout>
+</LinearLayout>
