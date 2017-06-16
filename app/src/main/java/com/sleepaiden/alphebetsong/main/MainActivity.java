@@ -10,12 +10,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.ToxicBakery.viewpager.transforms.ZoomOutSlideTransformer;
+import com.sleepaiden.alphebetsong.Metrics;
+import com.sleepaiden.alphebetsong.MyAppConfig;
 import com.sleepaiden.alphebetsong.R;
 import com.sleepaiden.alphebetsong.models.AlphebetPage;
 import com.sleepaiden.alphebetsong.settings.PreferenceConstants;
 import com.sleepaiden.alphebetsong.settings.SettingsActivity;
 import com.sleepaiden.alphebetsong.views.CustomViewPager;
 import com.sleepaiden.androidcommonutils.PreferenceUtils;
+import com.sleepaiden.androidcommonutils.metric.MetricHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +31,7 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements VoiceFragmentDialog.VoiceUpdateInterface {
     private static final String TAG = "MainActivity";
     private PreferenceUtils priPreferenceUtils;
+    private MetricHelper metricHelper;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.viewPager) CustomViewPager mViewPager;
@@ -110,6 +114,8 @@ public class MainActivity extends AppCompatActivity implements VoiceFragmentDial
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         priPreferenceUtils = new PreferenceUtils(this, PreferenceConstants.PRIVATE_PREF);
+        metricHelper = new MetricHelper(this, MyAppConfig.getAppConfig());
+        metricHelper.increaseCounter(Metrics.MAIN_ACTIVITY_USAGE_METRIC);
         setSupportActionBar(toolbar);
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -180,8 +186,4 @@ public class MainActivity extends AppCompatActivity implements VoiceFragmentDial
             }
         }
     }
-
-    //    static {
-//        System.loadLibrary("native-lib");
-//    }
 }

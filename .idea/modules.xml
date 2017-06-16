@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AlphebetSong.iml" filepath="$PROJECT_DIR$/AlphebetSong.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MessageSigner/MessageSigner.iml" filepath="$PROJECT_DIR$/MessageSigner/MessageSigner.iml" />
       <module fileurl="file://$PROJECT_DIR$/androidcommonutils/androidcommonutils.iml" filepath="$PROJECT_DIR$/androidcommonutils/androidcommonutils.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>

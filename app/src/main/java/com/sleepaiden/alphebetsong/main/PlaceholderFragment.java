@@ -19,11 +19,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.sleepaiden.alphebetsong.Metrics;
+import com.sleepaiden.alphebetsong.MyAppConfig;
 import com.sleepaiden.alphebetsong.R;
 import com.sleepaiden.alphebetsong.models.AlphebetPage;
 import com.sleepaiden.alphebetsong.settings.PreferenceConstants;
 import com.sleepaiden.androidcommonutils.FileUtils;
 import com.sleepaiden.androidcommonutils.PreferenceUtils;
+import com.sleepaiden.androidcommonutils.metric.MetricHelper;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -38,7 +41,7 @@ public class PlaceholderFragment extends Fragment implements FragmentLifecycle {
 
     private AlphebetPage alphebetPage;
     private PreferenceUtils preferenceUtils;
-    private String learningMode;
+    private MetricHelper metricHelper;
     private String soundSource;
 
     @BindView(R.id.imageView) ImageView imageView;
@@ -78,6 +81,7 @@ public class PlaceholderFragment extends Fragment implements FragmentLifecycle {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         preferenceUtils = new PreferenceUtils(getContext());
+        metricHelper = new MetricHelper(getContext(), MyAppConfig.getAppConfig());
         soundSource = preferenceUtils.getString(
                 PreferenceConstants.PREF_KEY_SOUND_SOURCE,
                 PreferenceConstants.SOUND_SOURCE_DEFAULT);
@@ -164,6 +168,7 @@ public class PlaceholderFragment extends Fragment implements FragmentLifecycle {
             Log.d(TAG, "Start recording...");
         } catch (Exception e) {
             Log.e(TAG, "Prepare media recorder failed.", e);
+            metricHelper.errorMetric(Metrics.VOICE_RECORD_ERROR, e);
         }
     }
 
@@ -179,6 +184,7 @@ public class PlaceholderFragment extends Fragment implements FragmentLifecycle {
                         .show(getFragmentManager(), null);
             } catch (Exception e) {
                 Log.e(TAG, "Failed to stop voice recorder.", e);
+                metricHelper.errorMetric(Metrics.VOICE_RECORD_ERROR, e);
             } finally {
                 mRecorder.release();
                 isRecording = false;
@@ -215,6 +221,7 @@ public class PlaceholderFragment extends Fragment implements FragmentLifecycle {
                 isPlaying = true;
             } catch (Exception e) {
                 Log.e(TAG, "prepare play voice failed.");
+                metricHelper.errorMetric(Metrics.AUDIO_PLAY_ERROR, e);
             }
         }
     }

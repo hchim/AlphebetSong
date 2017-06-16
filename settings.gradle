@@ -1,1 +1,1 @@
-include ':app', ':androidcommonutils'
+include ':app', ':androidcommonutils', ':MessageSigner'
