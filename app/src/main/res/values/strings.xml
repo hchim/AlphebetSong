@@ -15,6 +15,29 @@
         <item>Apple</item>
         <item>Baby</item>
         <item>Cookie</item>
+        <item>Doggy</item>
+        <item>Egg</item>
+        <item>Flower</item>
+        <item>Guitar</item>
+        <item>Honey</item>
+        <item>Igloo</item>
+        <item>Jelly</item>
+        <item>Kitten</item>
+        <item>Lion</item>
+        <item>Monkey</item>
+        <item>Noodle</item>
+        <item>Oyster</item>
+        <item>Panda</item>
+        <item>Quarter</item>
+        <item>Rabbit</item>
+        <item>Salmon</item>
+        <item>Tiger</item>
+        <item>Umbrella</item>
+        <item>Vacuum</item>
+        <item>Whale</item>
+        <item>X-ray</item>
+        <item>Yogurt</item>
+        <item>Zebra</item>
     </array>
 
     <string name="tips">Tips:</string>

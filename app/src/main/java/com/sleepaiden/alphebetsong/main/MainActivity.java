@@ -27,7 +27,6 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements VoiceFragmentDialog.VoiceUpdateInterface {
     private static final String TAG = "MainActivity";
-    private PreferenceUtils preferenceUtils;
     private PreferenceUtils priPreferenceUtils;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
@@ -39,12 +38,58 @@ public class MainActivity extends AppCompatActivity implements VoiceFragmentDial
             R.drawable.apple,
             R.drawable.baby,
             R.drawable.cookie,
+            R.drawable.doggy,
+            R.drawable.egg,
+            R.drawable.flower,
+            R.drawable.guitar,
+            R.drawable.honey,
+            R.drawable.igloo,
+            R.drawable.jelly,
+            R.drawable.kitten,
+            R.drawable.lion,
+            R.drawable.monkey,
+            R.drawable.noodle,
+            R.drawable.oyster,
+            R.drawable.panda,
+            R.drawable.quarter,
+            R.drawable.rabbit,
+            R.drawable.salmon,
+            R.drawable.tiger,
+            R.drawable.umbrella,
+            R.drawable.vacuum,
+            R.drawable.whale,
+            R.drawable.xray,
+            R.drawable.yogurt,
+            R.drawable.zebra
     };
 
     private int[] sounds = {
             R.raw.alphebet_apple,
             R.raw.alphebet_baby,
             R.raw.alphebet_cookie,
+            R.raw.alphebet_apple,
+            R.raw.alphebet_apple,
+            R.raw.alphebet_apple,
+            R.raw.alphebet_apple,
+            R.raw.alphebet_apple,
+            R.raw.alphebet_apple,
+            R.raw.alphebet_apple,
+            R.raw.alphebet_apple,
+            R.raw.alphebet_apple,
+            R.raw.alphebet_apple,
+            R.raw.alphebet_apple,
+            R.raw.alphebet_apple,
+            R.raw.alphebet_apple,
+            R.raw.alphebet_apple,
+            R.raw.alphebet_apple,
+            R.raw.alphebet_apple,
+            R.raw.alphebet_apple,
+            R.raw.alphebet_apple,
+            R.raw.alphebet_apple,
+            R.raw.alphebet_apple,
+            R.raw.alphebet_apple,
+            R.raw.alphebet_apple,
+            R.raw.alphebet_apple
     };
 
     /**
@@ -64,7 +109,6 @@ public class MainActivity extends AppCompatActivity implements VoiceFragmentDial
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        preferenceUtils = new PreferenceUtils(this);
         priPreferenceUtils = new PreferenceUtils(this, PreferenceConstants.PRIVATE_PREF);
         setSupportActionBar(toolbar);
 
