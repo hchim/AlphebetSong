@@ -5,6 +5,6 @@ package com.sleepaiden.alphebetsong;
  */
 
 public class Constants {
-    public static final String APP_NAME = "AlphebetSong";
+    public static final String APP_NAME = "AlphabetSong";
     public static final String APP_VERSION = "v1.0.0";
 }
