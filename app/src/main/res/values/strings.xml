@@ -9,7 +9,7 @@
     <string name="start_recording">Start recording...</string>
     <string name="stop_recording">Stop recording...</string>
     <string name="failed_to_save_voice">Failed to save your voice.</string>
-    <string name="successfully_save_voice">Voice saved successfully!</string>
+    <string name="successfully_save_voice">Saved successfully!</string>
 
     <array name="alphebet_words">
         <item>Apple</item>
@@ -42,11 +42,13 @@
 
     <string name="tips">Tips:</string>
     <array name="tips_array">
+        <item>\u25A0 Go to a quiet room with fewer distractions.</item>
+        <item>\u25A0 Sit face to face with the child.</item>
         <item>\u25A0 Use tactile cues to stimulate initial sounds when listening and watching.</item>
-        <item>\u25A0 Emphase on one sound in each word.</item>
-        <item>\u25A0 Explode stop consonents: B, D, G, K, P and T.</item>
-        <item>\u25A0 Stretch fractives: S, F and V.</item>
-        <item>\u25A0 Exaggerate mouch positions for vowels: A, E, I, O and U.</item>
+        <item>\u25A0 Emphasize on one sound in each word.</item>
+        <item>\u25A0 Explode stop consonants: B, D, G, K, P and T.</item>
+        <item>\u25A0 Stretch fricatives: S, F and V.</item>
+        <item>\u25A0 Exaggerate mouth positions for vowels: A, E, I, O and U.</item>
     </array>
 
     <!-- Strings related to Settings -->

@@ -84,16 +84,16 @@ public class MainActivity extends AppCompatActivity implements VoiceFragmentDial
             R.raw.noodle,
             R.raw.oyster,
             R.raw.panda,
-            R.raw.alphebet_apple,
-            R.raw.alphebet_apple,
-            R.raw.alphebet_apple,
-            R.raw.alphebet_apple,
-            R.raw.alphebet_apple,
-            R.raw.alphebet_apple,
-            R.raw.alphebet_apple,
-            R.raw.alphebet_apple,
-            R.raw.alphebet_apple,
-            R.raw.alphebet_apple
+            R.raw.quarter,
+            R.raw.rabbit,
+            R.raw.salmon,
+            R.raw.tiger,
+            R.raw.umbrella,
+            R.raw.vacuum,
+            R.raw.whale,
+            R.raw.xray,
+            R.raw.yogurt,
+            R.raw.zebra
     };
 
     /**

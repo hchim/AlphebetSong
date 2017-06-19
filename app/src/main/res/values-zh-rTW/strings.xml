@@ -1,0 +1,66 @@
+<resources>
+    <string name="app_name">字母歌</string>
+    <string name="action_settings">設置</string>
+    <string name="title_activity_settings">設置</string>
+
+    <string name="ok_button">確定</string>
+    <string name="save_button">保存</string>
+    <string name="cancel_button">取消</string>
+    <string name="start_recording">開始錄音...</string>
+    <string name="stop_recording">停止錄音...</string>
+    <string name="failed_to_save_voice">語音保存失敗.</string>
+    <string name="successfully_save_voice">保存成功!</string>
+
+    <array name="alphebet_words">
+        <item>Apple</item>
+        <item>Baby</item>
+        <item>Cookie</item>
+        <item>Doggy</item>
+        <item>Elephant</item>
+        <item>Flower</item>
+        <item>Guitar</item>
+        <item>Honey</item>
+        <item>Igloo</item>
+        <item>Jelly</item>
+        <item>Kitten</item>
+        <item>Lion</item>
+        <item>Monkey</item>
+        <item>Noodle</item>
+        <item>Oyster</item>
+        <item>Panda</item>
+        <item>Quarter</item>
+        <item>Rabbit</item>
+        <item>Salmon</item>
+        <item>Tiger</item>
+        <item>Umbrella</item>
+        <item>Vacuum</item>
+        <item>Whale</item>
+        <item>X-ray</item>
+        <item>Yogurt</item>
+        <item>Zebra</item>
+    </array>
+
+    <string name="tips">提示:</string>
+    <array name="tips_array">
+        <item>\u25A0 帶孩子去一個分心物比較少且安靜的房間。</item>
+        <item>\u25A0 和孩子面對面坐.</item>
+        <item>\u25A0 在聽和看的同時，使用觸覺提示來刺激孩子的初始發音。</item>
+        <item>\u25A0 每個單詞只關注一個音。</item>
+        <item>\u25A0 爆破休止音: B, D, G, K, P 和 T。</item>
+        <item>\u25A0 拉長摩擦音: S, F 和 V。</item>
+        <item>\u25A0 元音嘴巴位置要誇張: A, E, I, O 和 U。</item>
+    </array>
+
+    <!-- Strings related to Settings -->
+    <string name="pref_cat_general">通用設置</string>
+
+    <string name="pref_title_sound_source">聲音選擇</string>
+    <string-array name="pref_sound_source_list_titles">
+        <item>Default</item>
+        <item>Custom</item>
+    </string-array>
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">通用設置</string>
+    <string name="pref_ringtone_silent">靜音</string>
+</resources>
