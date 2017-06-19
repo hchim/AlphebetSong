@@ -37,7 +37,7 @@ public class FirstPageFragment extends Fragment implements FragmentLifecycle {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 getContext(),
-                android.R.layout.simple_list_item_1,
+                R.layout.tips_item,
                 tips);
         tipsListView.setAdapter(adapter);
 

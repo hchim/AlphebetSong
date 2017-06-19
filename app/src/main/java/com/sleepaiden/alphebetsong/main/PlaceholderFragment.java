@@ -55,7 +55,7 @@ public class PlaceholderFragment extends Fragment implements FragmentLifecycle {
     private String voiceCachePath;
     private MediaPlayer mPlayer;
     private boolean isPlaying = false;
-    private String soundPath;
+    private Snackbar snackbar;
 
     /**
      * The fragment argument representing the section number for this
@@ -164,7 +164,8 @@ public class PlaceholderFragment extends Fragment implements FragmentLifecycle {
             mRecorder.prepare();
             mRecorder.start();
             isRecording = true;
-            Snackbar.make(voiceBtn, R.string.start_recording, Snackbar.LENGTH_SHORT).show();
+            snackbar = Snackbar.make(voiceBtn, R.string.start_recording, Snackbar.LENGTH_INDEFINITE);
+            snackbar.show();
             Log.d(TAG, "Start recording...");
         } catch (Exception e) {
             Log.e(TAG, "Prepare media recorder failed.", e);
@@ -175,7 +176,9 @@ public class PlaceholderFragment extends Fragment implements FragmentLifecycle {
     private void stopRecording() {
         if (mRecorder != null && isRecording) {
             try {
-                Snackbar.make(voiceBtn, R.string.stop_recording, Snackbar.LENGTH_SHORT).show();
+                if (snackbar != null) {
+                    snackbar.dismiss();
+                }
                 mRecorder.stop();
                 String customVoiceFile = FileUtils.getDataDir(getContext())
                         + String.format("/alphebet_%s.3gp", alphebetPage.getWord().toLowerCase());

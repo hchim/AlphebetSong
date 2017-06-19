@@ -6,8 +6,7 @@
     <string name="ok_button">確定</string>
     <string name="save_button">保存</string>
     <string name="cancel_button">取消</string>
-    <string name="start_recording">開始錄音...</string>
-    <string name="stop_recording">停止錄音...</string>
+    <string name="start_recording">錄音中...</string>
     <string name="failed_to_save_voice">語音保存失敗.</string>
     <string name="successfully_save_voice">保存成功!</string>
 
@@ -44,11 +43,11 @@
     <array name="tips_array">
         <item>\u25A0 帶孩子去一個分心物比較少且安靜的房間。</item>
         <item>\u25A0 和孩子面對面坐.</item>
-        <item>\u25A0 在聽和看的同時，使用觸覺提示來刺激孩子的初始發音。</item>
+        <item>\u25A0 在聽和看的同時，使用觸覺的提示（讓他／她感受發聲的位置）來刺激孩子發音。</item>
         <item>\u25A0 每個單詞只關注一個音。</item>
         <item>\u25A0 爆破休止音: B, D, G, K, P 和 T。</item>
         <item>\u25A0 拉長摩擦音: S, F 和 V。</item>
-        <item>\u25A0 元音嘴巴位置要誇張: A, E, I, O 和 U。</item>
+        <item>\u25A0 發元音時，嘴巴位置要誇張一些: A, E, I, O 和 U。</item>
     </array>
 
     <!-- Strings related to Settings -->
