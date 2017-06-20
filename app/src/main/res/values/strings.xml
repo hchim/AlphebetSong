@@ -58,6 +58,10 @@
         <item>Default</item>
         <item>Custom</item>
     </string-array>
+    <string-array name="pref_sound_source_list_values">
+        <item>Default</item>
+        <item>Custom</item>
+    </string-array>
 
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>

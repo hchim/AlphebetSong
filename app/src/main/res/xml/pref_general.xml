@@ -7,7 +7,7 @@
         <ListPreference
             android:defaultValue="Default"
             android:entries="@array/pref_sound_source_list_titles"
-            android:entryValues="@array/pref_sound_source_list_titles"
+            android:entryValues="@array/pref_sound_source_list_values"
             android:key="sound_source_list"
             android:negativeButtonText="@null"
             android:positiveButtonText="@null"
