@@ -18,7 +18,7 @@ import com.sleepaiden.alphebetsong.settings.PreferenceConstants;
 import com.sleepaiden.alphebetsong.settings.SettingsActivity;
 import com.sleepaiden.alphebetsong.views.CustomViewPager;
 import com.sleepaiden.androidcommonutils.PreferenceUtils;
-import com.sleepaiden.androidcommonutils.metric.MetricHelper;
+import com.sleepaiden.androidcommonutils.service.MetricHelper;
 
 import java.util.ArrayList;
 import java.util.List;

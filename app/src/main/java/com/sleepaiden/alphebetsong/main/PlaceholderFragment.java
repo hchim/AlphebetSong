@@ -26,7 +26,7 @@ import com.sleepaiden.alphebetsong.models.AlphebetPage;
 import com.sleepaiden.alphebetsong.settings.PreferenceConstants;
 import com.sleepaiden.androidcommonutils.FileUtils;
 import com.sleepaiden.androidcommonutils.PreferenceUtils;
-import com.sleepaiden.androidcommonutils.metric.MetricHelper;
+import com.sleepaiden.androidcommonutils.service.MetricHelper;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
